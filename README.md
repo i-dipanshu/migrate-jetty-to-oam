@@ -42,3 +42,36 @@ The following deliverables are expected at the end of the project:
 - Better integration with Napptive platform: Migrating Jetty to OAM can enable it to integrate more seamlessly with the Napptive platform, which can provide additional benefits such as easier management and monitoring of Jetty servers.
 
 In summary, migrating Jetty to Open Application Model can improve deployment efficiency, scalability, developer productivity, and platform integration, which can lead to significant benefits for the organization.
+
+## The jetty.app.yaml
+```yaml
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: jetty
+  annotations:
+    version: "9.4.51-jre8-alpine"
+    description: "Jetty Web Server"
+spec:
+  components:
+    - name: jetty
+      type: webservice
+      properties:
+        image: jetty:9.4.51-jre8-alpine
+        ports:
+          - port: 80
+            expose: true
+        env:
+          - name: JETTY_HOME
+            value: "/usr/local/jetty"
+          - name: JETTY_BASE
+            value: "/var/lib/jetty"
+          - name: TMPDIR
+            value: "/tmp/jetty"
+      traits:
+        - type: napptive-ingress
+          properties:
+            name: jetty
+            port: 80
+            path: /
+```
