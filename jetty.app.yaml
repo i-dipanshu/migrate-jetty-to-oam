@@ -1,0 +1,29 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: jetty
+  annotations:
+    version: "9.4.51-jre8-alpine"
+    description: "Jetty Web Server"
+spec:
+  components:
+    - name: jetty
+      type: webservice
+      properties:
+        image: jetty:9.4.51-jre8-alpine
+        ports:
+          - port: 80
+            expose: true
+        env:
+          - name: JETTY_HOME
+            value: "/usr/local/jetty"
+          - name: JETTY_BASE
+            value: "/var/lib/jetty"
+          - name: TMPDIR
+            value: "/tmp/jetty"
+      traits:
+        - type: napptive-ingress
+          properties:
+            name: jetty
+            port: 80
+            path: /
