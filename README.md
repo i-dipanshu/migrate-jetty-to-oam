@@ -59,7 +59,7 @@ spec:
       properties:
         image: jetty:9.4.51-jre8-alpine
         ports:
-          - port: 80
+          - port: 8080
             expose: true
         env:
           - name: JETTY_HOME
@@ -72,6 +72,6 @@ spec:
         - type: napptive-ingress
           properties:
             name: jetty
-            port: 80
+            port: 8080
             path: /
 ```
